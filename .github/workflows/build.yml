@@ -1,0 +1,40 @@
+name: Build SOPSoft APK
+on:
+  push:
+    branches: [ main ] # Se activa cada vez que subes código
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0' # Versión estable para Flet
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Flet
+        run: |
+          pip install flet
+
+      - name: Build APK
+        run: |
+          flet build apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: SOPSoft-Mod-Menu
+          path: build/apk/*.apk
