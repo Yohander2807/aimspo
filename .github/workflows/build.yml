@@ -1,4 +1,4 @@
-name: Build SOPSoft APK
+name: Build SOPSoft RED APK
 on:
   push:
     branches: [ main, master ]
@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Forzamos el uso de Node 24 como pide GitHub
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Solución al error de depreciación
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Flet
+      - name: Install Dependencies
         run: |
           pip install flet
 
@@ -35,8 +35,8 @@ jobs:
         run: |
           flet build apk
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4 # Versión v4 obligatoria en 2026
         with:
-          name: SOPSoft-Mod-Menu-V4.7.1
+          name: SOPSoft-Red-Final
           path: build/apk/*.apk
