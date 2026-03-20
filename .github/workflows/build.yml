@@ -20,25 +20,24 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          # Actualizado a la versión que Flet te pidió en el log de error
-          flutter-version: '3.22.0' 
+          flutter-version: '3.22.2' # Versión estable y compatible
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: Install Flet
         run: |
           pip install flet
 
       - name: Build APK
         run: |
-          # El comando 'yes' responde automáticamente "y" a la pregunta de instalación
-          yes | flet build apk
+          # Usamos 'yes' para aceptar licencias y 'release' para optimizar la APK
+          yes | flet build apk --release
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SOPSoft-Red-V4.7.2-Final
+          name: SOPSoft-Red-V4.7.3
           path: build/apk/*.apk
