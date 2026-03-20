@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Solución al error de depreciación
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
     steps:
       - uses: actions/checkout@v4
 
@@ -20,7 +20,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
+          # Actualizado a la versión que Flet te pidió en el log de error
+          flutter-version: '3.22.0' 
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -33,10 +34,11 @@ jobs:
 
       - name: Build APK
         run: |
-          flet build apk
+          # El comando 'yes' responde automáticamente "y" a la pregunta de instalación
+          yes | flet build apk
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4 # Versión v4 obligatoria en 2026
+        uses: actions/upload-artifact@v4
         with:
-          name: SOPSoft-Red-Final
+          name: SOPSoft-Red-V4.7.2-Final
           path: build/apk/*.apk
